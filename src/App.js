@@ -4,9 +4,9 @@ import './task.css'
 
 const TaskList = ({ tasksList }) => (
   <ul>
-    {tasksList.map((task) => (
-      <li key={task.id} className={`completed-${task.completed.toString()}`}>
-        [{task.task}]
+    {tasksList.map(({id, task, completed}) => (
+      <li key={id} className={`completed-${completed.toString()}`}>
+        [{task}]
         <button>
           Complete task
         </button>

@@ -1,0 +1,9 @@
+.completed-true {
+    text-decoration: line-through;
+    color: grey;
+}
+
+.completed-false {
+    text-decoration: none;
+    color: black;
+}

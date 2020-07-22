@@ -1,36 +1,64 @@
 import React from "react";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
+import './task.css'
+
+const TaskList = ({ tasksList }) => (
+  <ul>
+    {tasksList.map((task) => (
+      <li key={task.id} className={`completed-${task.completed.toString()}`}>
+        {task.task}
+        <button>
+          Complete task
+        </button>
+        <button>
+          Delete Task
+        </button>
+      </li>
+    ))}
+  </ul>
+);
+
+const AddTask = ({ taskName, handleChange, submitHandler }) => (
+  <div>
+    <input
+      type="text"
+      placeholder="add new task here"
+      value={taskName}
+      onChange={handleChange}
+    />
+    <button onClick={submitHandler}>Add task</button>
+  </div>
+);
 
 function App() {
   const [tasks, setTasks] = React.useState([]);
-  const [taskName, setTaskName] = React.useState('');
+  const [taskName, setTaskName] = React.useState("");
 
-  const listTasks = tasks.map(({ id, task, completed }) => <li key={id} className={`completed-${completed.toString()}`}>{task}</li>);
-
-  const handleChange = event => {
+  const handleChange = (event) => {
     setTaskName(event.target.value);
-  }
+  };
 
   const submitHandler = () => {
     const newTask = {
       id: uuidv4(),
       task: taskName,
-      completed: false
+      completed: false,
     };
     setTasks(tasks.concat(newTask));
-    setTaskName('');
-  }
+    setTaskName("");
+  };
 
   return (
     <div>
       <h1>TODO list</h1>
 
-      <input type="text" placeholder="add new task here" value={taskName} onChange={handleChange} />
-      <button onClick={submitHandler}>Add task</button>
+      <AddTask
+        taskName={taskName}
+        handleChange={handleChange}
+        submitHandler={submitHandler}
+      />
 
-      <ul>
-        {listTasks}
-      </ul>
+      <TaskList tasksList={tasks} />
     </div>
   );
 }

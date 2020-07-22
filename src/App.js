@@ -6,7 +6,7 @@ const TaskList = ({ tasksList }) => (
   <ul>
     {tasksList.map((task) => (
       <li key={task.id} className={`completed-${task.completed.toString()}`}>
-        {task.task}
+        [{task.task}]
         <button>
           Complete task
         </button>
@@ -45,7 +45,7 @@ function App() {
       completed: false,
     };
     setTasks(tasks.concat(newTask));
-    setTaskName("");
+    setTaskName('');
   };
 
   return (

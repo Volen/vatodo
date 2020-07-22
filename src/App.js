@@ -26,7 +26,9 @@ const AddTask = ({ taskName, handleChange, submitHandler }) => (
 );
 
 function App() {
-  const [tasks, setTasks] = React.useState([]);
+  const [tasks, setTasks] = React.useState(
+    JSON.parse(localStorage.getItem("tasks") || "[]")
+  );
   const [taskName, setTaskName] = React.useState("");
 
   const handleChange = (event) => {
@@ -40,6 +42,7 @@ function App() {
       completed: false,
     };
     setTasks(tasks.concat(newTask));
+    localStorage.setItem("tasks", JSON.stringify(tasks.concat(newTask)));
     setTaskName("");
   };
 

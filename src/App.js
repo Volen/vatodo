@@ -1,18 +1,13 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
-import './task.css'
+import "./task.css";
 
 const TaskList = ({ tasksList }) => (
   <ul>
-    {tasksList.map(({id, task, completed}) => (
+    {tasksList.map(({ id, task, completed }) => (
       <li key={id} className={`completed-${completed.toString()}`}>
-        [{task}]
-        <button>
-          Complete task
-        </button>
-        <button>
-          Delete Task
-        </button>
+        [{task}]<button>Complete task</button>
+        <button>Delete Task</button>
       </li>
     ))}
   </ul>
@@ -45,7 +40,7 @@ function App() {
       completed: false,
     };
     setTasks(tasks.concat(newTask));
-    setTaskName('');
+    setTaskName("");
   };
 
   return (

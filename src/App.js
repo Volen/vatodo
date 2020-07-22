@@ -2,12 +2,12 @@ import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./task.css";
 
-const TaskList = ({ tasksList }) => (
+const TaskList = ({ tasksList, deleteHandler }) => (
   <ul>
     {tasksList.map(({ id, task, completed }) => (
       <li key={id} className={`completed-${completed.toString()}`}>
         [{task}]<button>Complete task</button>
-        <button>Delete Task</button>
+        <button data-id={id} onClick={deleteHandler}>Delete Task</button>
       </li>
     ))}
   </ul>
@@ -46,6 +46,13 @@ function App() {
     setTaskName("");
   };
 
+  const deleteHandler = (event) => {
+    const id = event.target.getAttribute('data-id');
+    const newList = tasks.filter((item) => item.id !== id);
+    setTasks(newList);
+    localStorage.setItem("tasks", JSON.stringify(newList));
+  };
+
   return (
     <div>
       <h1>TODO list</h1>
@@ -56,7 +63,7 @@ function App() {
         submitHandler={submitHandler}
       />
 
-      <TaskList tasksList={tasks} />
+      <TaskList tasksList={tasks} deleteHandler={deleteHandler}/>
     </div>
   );
 }

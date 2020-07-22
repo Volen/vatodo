@@ -17,7 +17,6 @@ function App() {
       task: taskName,
       completed: false
     };
-    console.log(newTask);
     setTasks(tasks.concat(newTask));
     setTaskName('');
   }

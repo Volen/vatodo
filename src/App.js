@@ -8,7 +8,7 @@ const TaskList = ({ tasksList, deleteHandler, completeHandler }) => (
       <li key={id} className={`completed-${completed.toString()}`}>
         [{task}]
         <button data-id={id} onClick={completeHandler}>
-          Complete task
+          {completed ? "Undo" : "Complete task"}
         </button>
         <button data-id={id} onClick={deleteHandler}>
           Delete Task
@@ -64,7 +64,7 @@ function App() {
       if (task.id === id) {
         const newTask = {
           ...task,
-          completed: true,
+          completed: !task.completed,
         };
         return newTask;
       } else {
@@ -73,7 +73,6 @@ function App() {
     });
 
     localStorage.setItem("tasks", JSON.stringify(newList));
-    console.log(newList);
     setTasks(newList);
   };
 

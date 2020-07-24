@@ -18,7 +18,7 @@ const TaskList = ({ tasksList, deleteHandler, completeHandler }) => (
   </ul>
 );
 
-const AddTask = ({ taskName, handleChange, submitHandler }) => (
+const AddTask = ({ taskName, handleChange, addHandler }) => (
   <div>
     <input
       type="text"
@@ -26,7 +26,7 @@ const AddTask = ({ taskName, handleChange, submitHandler }) => (
       value={taskName}
       onChange={handleChange}
     />
-    <button onClick={submitHandler}>Add task</button>
+    <button onClick={addHandler}>Add task</button>
   </div>
 );
 
@@ -36,17 +36,20 @@ function App() {
   );
   const [taskName, setTaskName] = React.useState("");
 
+  React.useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+
   const handleChange = (event) => {
     setTaskName(event.target.value);
   };
 
-  const submitHandler = () => {
+  const addHandler = () => {
     const newTask = {
       id: uuidv4(),
       task: taskName,
       completed: false,
     };
-    localStorage.setItem("tasks", JSON.stringify(tasks.concat(newTask)));
     setTasks(tasks.concat(newTask));
     setTaskName("");
   };
@@ -54,7 +57,6 @@ function App() {
   const deleteHandler = (event) => {
     const id = event.target.getAttribute("data-id");
     const newList = tasks.filter((item) => item.id !== id);
-    localStorage.setItem("tasks", JSON.stringify(newList));
     setTasks(newList);
   };
 
@@ -72,7 +74,6 @@ function App() {
       }
     });
 
-    localStorage.setItem("tasks", JSON.stringify(newList));
     setTasks(newList);
   };
 
@@ -83,7 +84,7 @@ function App() {
       <AddTask
         taskName={taskName}
         handleChange={handleChange}
-        submitHandler={submitHandler}
+        addHandler={addHandler}
       />
 
       <TaskList
